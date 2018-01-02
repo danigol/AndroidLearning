@@ -10,5 +10,6 @@
     <string name="false_button">False</string>
     <string name="correct_toast">Correct!</string>
     <string name="incorrect_toast">Incorrect!</string>
+    <string name="skip_question">Skipped!</string>
     <string name="next_on_correct">Go to next question on correct answer:</string>
 </resources>

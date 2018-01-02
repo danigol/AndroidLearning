@@ -39,6 +39,8 @@ public class QuizActivity extends AppCompatActivity {
         mQuestionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(QuizActivity.this,
+                        R.string.skip_question, Toast.LENGTH_SHORT).show();
                 nextQuestion();
                 updateQuestion();
             }
