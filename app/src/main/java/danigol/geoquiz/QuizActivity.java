@@ -40,61 +40,40 @@ public class QuizActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_quiz);
 
+        // Initialize text view before updating content
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
-        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(QuizActivity.this,
-                        R.string.skip_question, Toast.LENGTH_SHORT).show();
-                nextQuestion();
-                updateQuestion();
-            }
+        mQuestionTextView.setOnClickListener(v -> {
+            Toast.makeText(QuizActivity.this,
+                    R.string.skip_question, Toast.LENGTH_SHORT).show();
+            nextQuestion();
+            updateQuestion();
         });
+
+        // Display first question
         updateQuestion();
 
+        // Set up buttons and options
         mTrueButton = (Button) findViewById(R.id.true_button);
-        mTrueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                checkAnswer(true);
-            }
-        });
+        mTrueButton.setOnClickListener(v -> checkAnswer(true));
 
         mFalseButton = (Button) findViewById(R.id.false_button);
-        mFalseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                checkAnswer(false);
-            }
-        });
+        mFalseButton.setOnClickListener(v -> checkAnswer(false));
 
         mNextButton = (ImageButton) findViewById(R.id.next_button);
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nextQuestion();
-                updateQuestion();
-            }
+        mNextButton.setOnClickListener(v -> {
+            nextQuestion();
+            updateQuestion();
         });
 
         mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
-        mPreviousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                previousQuestion();
-                updateQuestion();
-            }
+        mPreviousButton.setOnClickListener(v ->  {
+            previousQuestion();
+            updateQuestion();
         });
 
         mNextQuestionOnCorrectCheckBox =
                 (CheckBox) findViewById(R.id.checkbox_next_question_on_correct);
-        mNextQuestionOnCorrectCheckBox.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                mNextOnCorrect = !mNextOnCorrect;
-            }
-        });
-
+        mNextQuestionOnCorrectCheckBox.setOnClickListener(v -> mNextOnCorrect = !mNextOnCorrect);
     }
 
     @Override
