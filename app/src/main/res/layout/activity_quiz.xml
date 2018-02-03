@@ -5,6 +5,15 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <!-- Score -->
+    <TextView
+        android:id="@+id/player_score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:padding="32dp"
+        android:paddingBottom="128dp"/>
+
     <!-- Question -->
     <TextView
         android:id="@+id/question_text_view"

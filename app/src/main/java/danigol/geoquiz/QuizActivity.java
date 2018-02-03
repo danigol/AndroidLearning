@@ -3,7 +3,6 @@ package danigol.geoquiz;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -19,7 +18,10 @@ public class QuizActivity extends AppCompatActivity {
     private ImageButton mNextButton;
     private ImageButton mPreviousButton;
     private TextView mQuestionTextView;
+    private TextView mScoreView;
     private CheckBox mNextQuestionOnCorrectCheckBox;
+
+    private Player mPlayer;
 
     private Question[] mQuestionBank = new Question[] {
             new Question(R.string.question_australia, true),
@@ -40,6 +42,9 @@ public class QuizActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_quiz);
 
+        // Create the player
+        mPlayer = new Player(0, mQuestionBank.length, "Danielle");
+
         // Initialize text view before updating content
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         mQuestionTextView.setOnClickListener(v -> {
@@ -48,6 +53,10 @@ public class QuizActivity extends AppCompatActivity {
             nextQuestion();
             updateQuestion();
         });
+
+        // Update the score
+        mScoreView = (TextView) findViewById(R.id.player_score);
+        updateScore(false);
 
         // Display first question
         updateQuestion();
@@ -117,6 +126,13 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    private void updateScore(boolean wasCorrect){
+        if (wasCorrect){
+            mPlayer.setScore(mPlayer.getScore() + 1);
+        }
+        mScoreView.setText(mPlayer.generateScoreString());
+    }
+
     private void updateQuestion() {
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
@@ -132,6 +148,7 @@ public class QuizActivity extends AppCompatActivity {
                 nextQuestion();
                 updateQuestion();
             }
+            updateScore(true);
         }
         else {
             messageResId = R.string.incorrect_toast;
