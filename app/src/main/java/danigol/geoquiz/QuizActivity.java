@@ -128,7 +128,7 @@ public class QuizActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        QuestionBank.getInstance().reset();
+        QuestionBank.deleteInstance();
         Log.d(TAG, "onDestroy() called.");
         super.onDestroy();
     }

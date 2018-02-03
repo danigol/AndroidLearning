@@ -32,9 +32,7 @@ public class QuestionBank {
         return mQuestionBook;
     }
 
-    public void reset(){
-        for (Question q : mQuestionBook){
-            q.setAlreadySeenOrGuessed(false);
-        }
+    public static void deleteInstance(){
+        instance = null;
     }
 }
