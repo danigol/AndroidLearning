@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="match_parent" >
+
 
     <!-- Score -->
     <TextView
@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:padding="32dp"
-        android:paddingBottom="128dp"/>
+        android:paddingBottom="128dp"
+        android:layout_gravity="top|left"/>
 
     <!-- Question -->
     <TextView
@@ -20,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_gravity="center_horizontal"
         android:padding="64dp" />
 
     <!-- Answer buttons -->
@@ -27,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_gravity="center_vertical|center_horizontal"
         android:layout_marginBottom="4dp">
 
         <Button
@@ -47,34 +50,35 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:padding="16dp"
+        android:layout_gravity="bottom|center">
         <ImageButton
             android:id="@+id/previous_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:src="@drawable/arrow_left" />
+            android:src="@drawable/arrow_left"/>
         <ImageButton
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:src="@drawable/arrow_right" />
+            android:src="@drawable/arrow_right"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:paddingTop="32dp"
-        android:paddingBottom="0dp">
+        android:paddingBottom="16dp"
+        android:layout_gravity="bottom|right">
 
         <CheckBox
             android:id="@+id/checkbox_next_question_on_correct"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="16dp"
             android:button="@null"
             android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
             android:text="@string/next_on_correct"
@@ -90,4 +94,4 @@
         android:layout_gravity="bottom|left"
         android:text="RESET" />
 
-</LinearLayout>
+</FrameLayout>

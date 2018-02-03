@@ -8,8 +8,10 @@
     <string name="question_asia">Lake Baikal is the world\'s oldest and deepest freshwater lake.</string>
     <string name="true_button">True</string>
     <string name="false_button">False</string>
+    <string name="seen_question_warn">Since you\'ve already seen this question, you can\'t get points for it.</string>
     <string name="correct_toast">Correct!</string>
-    <string name="incorrect_toast">Incorrect!</string>
+    <string name="correct_seen_toast">Correct, but you\'ve seen this before!</string>
+    <string name="incorrect_toast">Incorrect! You can\'t get points for this question now.</string>
     <string name="skip_question">Skipped!</string>
     <string name="next_on_correct">Go to next question on correct answer:</string>
 </resources>
