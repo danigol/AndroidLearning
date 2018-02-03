@@ -31,4 +31,10 @@ public class QuestionBank {
     public Question[] getQuestionBook(){
         return mQuestionBook;
     }
+
+    public void reset(){
+        for (Question q : mQuestionBook){
+            q.setAlreadySeenOrGuessed(false);
+        }
+    }
 }
