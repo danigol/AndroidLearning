@@ -82,4 +82,12 @@
             android:checked="true" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/reset_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        android:layout_gravity="bottom|left"
+        android:text="RESET" />
+
 </LinearLayout>

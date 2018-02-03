@@ -1,5 +1,8 @@
 package danigol.geoquiz;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * Created by Danielle on 2/3/18.
  * This class will store the questions in a singleton, separate from the quiz activity
@@ -34,5 +37,13 @@ public class QuestionBank {
 
     public static void deleteInstance(){
         instance = null;
+    }
+
+    public boolean[] getAllQuestionStatus(){
+        boolean[] allQuestionStatus = new boolean[mQuestionBook.length];
+        for (int i = 0; i < mQuestionBook.length; i++){
+            allQuestionStatus[i] = mQuestionBook[i].alreadySeenOrGuessed();
+        }
+        return allQuestionStatus;
     }
 }

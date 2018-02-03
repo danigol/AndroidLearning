@@ -9,6 +9,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
@@ -17,6 +20,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button mFalseButton;
     private ImageButton mNextButton;
     private ImageButton mPreviousButton;
+    private Button mResetButton;
     private TextView mQuestionTextView;
     private TextView mScoreView;
     private CheckBox mNextQuestionOnCorrectCheckBox;
@@ -32,6 +36,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final String KEY_INDEX = "index"; // Question index
     private static final String KEY_PLAYER = "player_name";
     private static final String KEY_SCORE = "player_score";
+    private static final String KEY_Q_BANK = "question_bank";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,18 @@ public class QuizActivity extends AppCompatActivity {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
             // Create the player
             mPlayer = new Player(playerScore, mQuestionBank.length, playerName);
+            // Restore the question state
+            // To preserve memory, we only are storing
+            //      the boolean for whether or not a question was seen
+            boolean[] seenQuestions = savedInstanceState.getBooleanArray(KEY_Q_BANK);
+            if (seenQuestions != null) {
+                for (int i = 0; i < seenQuestions.length; i++) {
+                    if (i > mQuestionBank.length){
+                        break;
+                    }
+                    mQuestionBank[i].setAlreadySeenOrGuessed(seenQuestions[i]);
+                }
+            }
         }
         else {
             // Create the player
@@ -88,6 +105,11 @@ public class QuizActivity extends AppCompatActivity {
             updateQuestion();
         });
 
+        mResetButton = (Button) findViewById(R.id.reset_button);
+        mResetButton.setOnClickListener(v -> {
+            reset();
+        });
+
         mNextQuestionOnCorrectCheckBox =
                 (CheckBox) findViewById(R.id.checkbox_next_question_on_correct);
         mNextQuestionOnCorrectCheckBox.setOnClickListener(v -> mNextOnCorrect = !mNextOnCorrect);
@@ -100,6 +122,9 @@ public class QuizActivity extends AppCompatActivity {
         savedInstanceState.putString(KEY_PLAYER, mPlayer.getName());
         savedInstanceState.putInt(KEY_SCORE, mPlayer.getScore());
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+        // Store JUST the booleans from the question status
+        savedInstanceState.putBooleanArray(KEY_Q_BANK,
+                QuestionBank.getInstance().getAllQuestionStatus());
     }
 
     @Override
@@ -128,7 +153,6 @@ public class QuizActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        QuestionBank.deleteInstance();
         Log.d(TAG, "onDestroy() called.");
         super.onDestroy();
     }
@@ -196,5 +220,18 @@ public class QuizActivity extends AppCompatActivity {
 
         Toast.makeText(QuizActivity.this,
                 messageResId, Toast.LENGTH_SHORT).show();
+    }
+
+    private void reset(){
+        // Reset EVERYTHING
+        mCurrentIndex = 0;
+        mPlayer.setScore(0);
+        QuestionBank.deleteInstance();
+        mQuestionBank = QuestionBank.getInstance().getQuestionBook();
+        updateScore(false);
+        updateQuestion();
+
+        Toast.makeText(QuizActivity.this,
+                "Score and Questions Reset", Toast.LENGTH_SHORT).show();
     }
 }

@@ -9,11 +9,6 @@ public class Player {
     private int mQuestions = 0;
     private String mName = "Player 1";
 
-    public Player(){
-        mScore = 0;
-        mQuestions = 0;
-        mName = "Player 1";
-    }
     public Player(int score, int questions, String name){
         mScore = score;
         mQuestions = questions;
@@ -49,15 +44,15 @@ public class Player {
         return validScore;
     }
 
-    public void setQuestions(int questions){
-        mQuestions = questions;
-    }
-
     public void setName(String name){
         mName = name;
     }
 
+    public void setQuestions(int q){
+        mQuestions = q;
+    }
+
     public String generateScoreString(){
-        return mName + " score: " + mScore + "/" + mQuestions;
+        return new String(mName + " score: " + mScore + "/" + mQuestions);
     }
 }
