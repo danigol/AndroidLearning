@@ -11,12 +11,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
     private static final int REQUEST_CODE_CHEAT = 0;
+    public static final int MAX_CHEATS = 3;
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -36,7 +35,7 @@ public class QuizActivity extends AppCompatActivity {
     private int mCurrentIndex = 0;
     private boolean mNextOnCorrect = true;
 
-    private int mCheatsLeft = 3;
+    private int mCheatsLeft = MAX_CHEATS;
 
     // Keys for saving state
     private static final String KEY_INDEX = "index"; // Question index
@@ -71,7 +70,7 @@ public class QuizActivity extends AppCompatActivity {
                     mQuestionBank[i].setAlreadySeenOrGuessed(seenQuestions[i]);
                 }
             }
-            mCheatsLeft = savedInstanceState.getInt(KEY_CHEATS_LEFT, 3);
+            mCheatsLeft = savedInstanceState.getInt(KEY_CHEATS_LEFT, MAX_CHEATS);
         }
         else {
             // Create the player
@@ -278,8 +277,10 @@ public class QuizActivity extends AppCompatActivity {
         mPlayer.setScore(0);
         QuestionBank.deleteInstance();
         mQuestionBank = QuestionBank.getInstance().getQuestionBook();
+        mCheatsLeft = MAX_CHEATS;
         updateScore(false);
         updateQuestion();
+        mCheatsLeftText.setText(getCheatsLeftText());
 
         Toast.makeText(QuizActivity.this,
                 "Score and Questions Reset", Toast.LENGTH_SHORT).show();

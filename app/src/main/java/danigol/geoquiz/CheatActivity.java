@@ -4,12 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 public class CheatActivity extends AppCompatActivity {
 
@@ -26,7 +23,7 @@ public class CheatActivity extends AppCompatActivity {
     private static final String KEY_CHEATS_LEFT = "cheats_left";
 
     private boolean mAnswerIsTrue;
-    private int mCheatsLeft = 3;
+    private int mCheatsLeft = QuizActivity.MAX_CHEATS;
 
     private TextView mAnswerTextView;
     private TextView mCheatsLeftTextView;
@@ -47,7 +44,7 @@ public class CheatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cheat);
 
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
-        mCheatsLeft = getIntent().getIntExtra(EXTRA_CHEATS_LEFT, 3);
+        mCheatsLeft = getIntent().getIntExtra(EXTRA_CHEATS_LEFT, QuizActivity.MAX_CHEATS);
 
         mAnswerTextView = (TextView) findViewById(R.id.answer_text_view);
         mCheatsLeftTextView = (TextView) findViewById(R.id.cheat_cheats_left);
@@ -69,6 +66,8 @@ public class CheatActivity extends AppCompatActivity {
             if (savedInstanceState.getBoolean(KEY_PLAYER_CHEATED)) {
                 userCheated();
             }
+            mCheatsLeft = savedInstanceState.getInt(KEY_CHEATS_LEFT);
+            mCheatsLeftTextView.setText(getCheatsLeftText());
         }
     }
 
@@ -79,6 +78,10 @@ public class CheatActivity extends AppCompatActivity {
         savedInstanceState.putInt(KEY_CHEATS_LEFT, mCheatsLeft);
     }
 
+    private String getCheatsLeftText() {
+        return "Cheats Left: " + mCheatsLeft;
+    }
+
     private void userCheated() {
         mPlayerCheated = true;
         if (mAnswerIsTrue) {
@@ -86,7 +89,7 @@ public class CheatActivity extends AppCompatActivity {
         } else {
             mAnswerTextView.setText(R.string.false_button);
         }
-        mCheatsLeftTextView.setText("Cheats left: " + mCheatsLeft);
+        mCheatsLeftTextView.setText(getCheatsLeftText());
         setAnswerShownResult(true);
         mPlayerCheated = true;
     }
