@@ -1,5 +1,6 @@
 package danigol.geoquiz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,12 +13,14 @@ import android.widget.Toast;
 public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
+    private static final int REQUEST_CODE_CHEAT = 0;
 
     private Button mTrueButton;
     private Button mFalseButton;
     private ImageButton mNextButton;
     private ImageButton mPreviousButton;
     private Button mResetButton;
+    private Button mCheatButton;
     private TextView mQuestionTextView;
     private TextView mScoreView;
     private CheckBox mNextQuestionOnCorrectCheckBox;
@@ -105,6 +108,14 @@ public class QuizActivity extends AppCompatActivity {
         mResetButton = (Button) findViewById(R.id.reset_button);
         mResetButton.setOnClickListener(v -> {
             reset();
+        });
+
+        mCheatButton = (Button) findViewById(R.id.cheat_button);
+        mCheatButton.setOnClickListener(v ->{
+            boolean answerIsTrue = mQuestionBank[mCurrentIndex].getAnswerTrue();
+            Intent cheatActivity =
+                    CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
+            startActivityForResult(cheatActivity, REQUEST_CODE_CHEAT);
         });
 
         mNextQuestionOnCorrectCheckBox =

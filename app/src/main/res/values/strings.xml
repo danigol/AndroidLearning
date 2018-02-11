@@ -14,7 +14,8 @@
     <string name="incorrect_toast">Incorrect! You can\'t get points for this question now.</string>
     <string name="skip_question">Skipped!</string>
     <string name="next_on_correct">Go to next question on correct answer:</string>
-    <string name="cheat_warning">Are you sure you want to cheat?</string>
+    <string name="cheat_warning">Are you sure you want to cheat? Press back without cheating
+        if you still want to be able to get points for this question.</string>
     <string name="show_answer_button">Show Answer</string>
     <string name="cheat_button">Cheat!</string>
     <string name="cheat_toast">You can\'t get points on this question, but now you know the answer!
