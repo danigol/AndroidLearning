@@ -10,7 +10,7 @@
     <string name="false_button">False</string>
     <string name="seen_question_warn">Since you\'ve already seen this question, you can\'t get points for it.</string>
     <string name="correct_toast">Correct!</string>
-    <string name="correct_seen_toast">Correct, but you\'ve seen this before!</string>
+    <string name="correct_seen_toast">Correct, but you\'ve seen this before (or you cheated)!</string>
     <string name="incorrect_toast">Incorrect! You can\'t get points for this question now.</string>
     <string name="skip_question">Skipped!</string>
     <string name="next_on_correct">Go to next question on correct answer:</string>
@@ -20,4 +20,5 @@
     <string name="cheat_button">Cheat!</string>
     <string name="cheat_toast">You can\'t get points on this question, but now you know the answer!
         Learning is its own reward.</string>
+    <string name="out_of_cheats_toast">Don\'t you think you\'ve cheated enough?</string>
 </resources>

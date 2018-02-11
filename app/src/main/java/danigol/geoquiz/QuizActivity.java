@@ -1,5 +1,6 @@
 package danigol.geoquiz;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -21,6 +24,7 @@ public class QuizActivity extends AppCompatActivity {
     private ImageButton mPreviousButton;
     private Button mResetButton;
     private Button mCheatButton;
+    private TextView mCheatsLeftText;
     private TextView mQuestionTextView;
     private TextView mScoreView;
     private CheckBox mNextQuestionOnCorrectCheckBox;
@@ -32,11 +36,14 @@ public class QuizActivity extends AppCompatActivity {
     private int mCurrentIndex = 0;
     private boolean mNextOnCorrect = true;
 
+    private int mCheatsLeft = 3;
+
     // Keys for saving state
     private static final String KEY_INDEX = "index"; // Question index
     private static final String KEY_PLAYER = "player_name";
     private static final String KEY_SCORE = "player_score";
     private static final String KEY_Q_BANK = "question_bank";
+    private static final String KEY_CHEATS_LEFT = "cheats_left";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,7 @@ public class QuizActivity extends AppCompatActivity {
                     mQuestionBank[i].setAlreadySeenOrGuessed(seenQuestions[i]);
                 }
             }
+            mCheatsLeft = savedInstanceState.getInt(KEY_CHEATS_LEFT, 3);
         }
         else {
             // Create the player
@@ -112,11 +120,21 @@ public class QuizActivity extends AppCompatActivity {
 
         mCheatButton = (Button) findViewById(R.id.cheat_button);
         mCheatButton.setOnClickListener(v ->{
-            boolean answerIsTrue = mQuestionBank[mCurrentIndex].getAnswerTrue();
-            Intent cheatActivity =
-                    CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
-            startActivityForResult(cheatActivity, REQUEST_CODE_CHEAT);
+            if (mCheatsLeft > 0) {
+                boolean answerIsTrue = mQuestionBank[mCurrentIndex].getAnswerTrue();
+                Intent cheatActivity =
+                        CheatActivity.newIntent(
+                                QuizActivity.this, answerIsTrue, mCheatsLeft);
+                startActivityForResult(cheatActivity, REQUEST_CODE_CHEAT);
+            }
+            else {
+                Toast.makeText(this,
+                        R.string.out_of_cheats_toast, Toast.LENGTH_SHORT).show();
+            }
         });
+
+        mCheatsLeftText = (TextView) findViewById(R.id.quiz_cheats_left);
+        mCheatsLeftText.setText(getCheatsLeftText());
 
         mNextQuestionOnCorrectCheckBox =
                 (CheckBox) findViewById(R.id.checkbox_next_question_on_correct);
@@ -133,6 +151,7 @@ public class QuizActivity extends AppCompatActivity {
         // Store JUST the booleans from the question status
         savedInstanceState.putBooleanArray(KEY_Q_BANK,
                 QuestionBank.getInstance().getAllQuestionStatus());
+        savedInstanceState.putInt(KEY_CHEATS_LEFT, mCheatsLeft);
     }
 
     @Override
@@ -163,6 +182,29 @@ public class QuizActivity extends AppCompatActivity {
     public void onDestroy() {
         Log.d(TAG, "onDestroy() called.");
         super.onDestroy();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            if (data == null) {
+                return;
+            }
+
+            if (CheatActivity.wasAnswerShown(data)) {
+                mQuestionBank[mCurrentIndex].setAlreadySeenOrGuessed(true);
+                Toast.makeText(this, R.string.cheat_toast, Toast.LENGTH_SHORT).show();
+                mCheatsLeft--;
+                mCheatsLeftText.setText(getCheatsLeftText());
+            }
+        }
+    }
+
+    private String getCheatsLeftText() {
+        return "Cheats Left: " + mCheatsLeft;
     }
 
     private void nextQuestion() {

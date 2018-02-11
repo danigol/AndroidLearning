@@ -36,6 +36,7 @@ public class Question {
      *      and answer questions they've already seen repeatedly for
      *      more points. Skipping means disabling your ability to get
      *      points for a question.
+     * Cheating will also set this to true
      * @param seenOrGuessed
      */
     public void setAlreadySeenOrGuessed(boolean seenOrGuessed){
