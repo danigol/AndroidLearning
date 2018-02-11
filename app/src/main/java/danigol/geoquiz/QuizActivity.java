@@ -9,9 +9,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
