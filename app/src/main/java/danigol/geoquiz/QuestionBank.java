@@ -1,8 +1,5 @@
 package danigol.geoquiz;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 /**
  * Created by Danielle on 2/3/18.
  * This class will store the questions in a singleton, separate from the quiz activity

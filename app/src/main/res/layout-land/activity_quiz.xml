@@ -1,97 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="danigol.geoquiz.QuizActivity"
+    android:orientation="horizontal"
+    android:layout_weight="7">
 
     <!-- Score -->
     <TextView
         android:id="@+id/player_score"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
         android:gravity="right"
-        android:padding="32dp"
-        android:paddingBottom="128dp"
-        android:layout_gravity="top|left"/>
+        tools:text="Player Score 000"/>
 
-    <!-- Question -->
+    <!-- Question Text -->
     <TextView
         android:id="@+id/question_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:padding="16dp"
         android:layout_gravity="center_horizontal"
-        android:padding="64dp" />
+        android:layout_below="@+id/player_score"
+        tools:text="What is your favorite color?"/>
 
     <!-- Answer buttons -->
     <LinearLayout
+        android:id="@+id/button_wrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_marginBottom="4dp">
+        android:layout_marginBottom="2dp"
+        android:layout_gravity="center"
+        android:layout_below="@+id/question_text_view"
+        android:layout_centerHorizontal="true">
 
         <Button
             android:id="@+id/true_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="32dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="29dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
             android:text="@string/true_button" />
 
         <Button
             android:id="@+id/false_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="32dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="29dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
             android:text="@string/false_button" />
     </LinearLayout>
-
     <LinearLayout
+        android:id="@+id/nav_wrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_gravity="bottom|center">
+        android:layout_gravity="center"
+        android:layout_below="@+id/button_wrapper"
+        android:layout_centerHorizontal="true">
         <ImageButton
             android:id="@+id/previous_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:src="@drawable/arrow_left"/>
+            android:src="@drawable/arrow_left" />
         <ImageButton
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:src="@drawable/arrow_right"/>
+            android:src="@drawable/arrow_right" />
     </LinearLayout>
 
-    <LinearLayout
+    <Button
+        android:id="@+id/cheat_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/cheat_button"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/nav_wrapper"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/cheat_button"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:paddingTop="32dp"
-        android:paddingBottom="16dp"
-        android:layout_gravity="bottom|right">
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/reset_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:layout_gravity="bottom|left"
+            android:text="RESET"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/quiz_cheats_left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Cheats Left"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"/>
 
         <CheckBox
             android:id="@+id/checkbox_next_question_on_correct"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
             android:button="@null"
             android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
             android:text="@string/next_on_correct"
             android:gravity="right"
-            android:checked="true" />
+            android:layout_gravity="bottom|right"
+            android:checked="true"
+            android:layout_weight="1"/>
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/reset_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="0dp"
-        android:layout_gravity="bottom|left"
-        android:text="RESET" />
-
-</FrameLayout>
+</RelativeLayout>
